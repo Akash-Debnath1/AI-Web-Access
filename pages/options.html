@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="options.css" />
+  <title>AI Web Access — Settings</title>
+</head>
+<body>
+  <aside class="nav">
+    <div class="brand">
+      <img src="../assets/icons/icon48.png" alt="" />
+      <div><h1>AI Web Access</h1><span id="version"></span></div>
+    </div>
+    <nav>
+      <button data-tab="general" class="active">General</button>
+      <button data-tab="engines">Search engines</button>
+      <button data-tab="custom">Custom engines</button>
+      <button data-tab="deepdark">Deep &amp; Dark web</button>
+      <button data-tab="voice">Voice input</button>
+      <button data-tab="prompt">Prompt template</button>
+      <button data-tab="appearance">Appearance & sites</button>
+      <button data-tab="aiskills">AI sites & skills</button>
+      <button data-tab="about">About & shortcuts</button>
+    </nav>
+  </aside>
+
+  <main>
+    <!-- ============ GENERAL ============ -->
+    <section id="tab-general" class="tab active">
+      <h2>General</h2>
+      <div class="card">
+        <div class="row"><div><strong>Real-time web access</strong><small>Attach live search results to your prompts before they are sent.</small></div>
+          <label class="switch"><input type="checkbox" data-key="enabled"/><span></span></label></div>
+        <div class="row"><div><strong>Send automatically</strong><small>When off, the context is added to the box and you press send yourself.</small></div>
+          <label class="switch"><input type="checkbox" data-key="autoSend"/><span></span></label></div>
+        <div class="row"><div><strong>Smart query</strong><small>Turn "please can you tell me about X" into a clean search for X.</small></div>
+          <label class="switch"><input type="checkbox" data-key="smartQuery"/><span></span></label></div>
+        <div class="row"><div><strong>Relevance guard</strong><small>Throw away results that share no terms with your question — stops unrelated (e.g. medical) papers from being attached.</small></div>
+          <label class="switch"><input type="checkbox" data-key="relevanceFilter"/><span></span></label></div>
+        <div class="row"><div><strong>Allow scholarly engines in general search</strong><small>Off = OpenAlex/Crossref/PubMed/Semantic Scholar only run for scholarly questions or when set as primary.</small></div>
+          <label class="switch"><input type="checkbox" data-key="includeScholarly"/><span></span></label></div>
+        <div class="row"><div><strong>Show sources panel</strong><small>Display the links that were used, next to the floating pill.</small></div>
+          <label class="switch"><input type="checkbox" data-key="showSources"/><span></span></label></div>
+        <div class="row"><div><strong>Deep read pages</strong><small>Also fetch and read the top result page(s) for richer, truly current context. Slower. Needs broad site access — grant it below.</small></div>
+          <label class="switch"><input type="checkbox" data-key="deepRead"/><span></span></label></div>
+        <div class="row"><div><strong>Link reader</strong><small>If your message contains a link (YouTube, Facebook, article…), read that page and give the chatbot its real content.</small></div>
+          <label class="switch"><input type="checkbox" data-lr="enabled"/><span></span></label></div>
+        <div class="row"><div><strong>Skip search when a link is read</strong><small>The link is the source, so don't also run a web search.</small></div>
+          <label class="switch"><input type="checkbox" data-lr="skipSearchWhenLink"/><span></span></label></div>
+        <div class="row"><div><strong>Invisible session reader</strong><small>For login-walled sites (Facebook, Instagram, X…) opens the page in a <b>minimized, unfocused window</b> — nothing visible appears — reads it with YOUR logged-in session, then closes it. Turn off for strict "never open any window" mode.</small></div>
+          <label class="switch"><input type="checkbox" data-lr="sessionReader"/><span></span></label></div>
+        <div class="row"><div><strong>Grant broad site access</strong><small> The extension asks for all-sites access when installed; this shows whether it is active.</small></div>
+          <button id="grantAll" class="btn ghost">Grant</button></div>
+      </div>
+      <div class="grid3">
+        <label class="field"><span>Links read per message</span>
+          <select data-lr="maxLinks"><option value="1">1</option><option value="2">2</option>
+          <option value="3">3</option><option value="5">5</option></select></label>
+        <label class="field"><span>Chars of content per link</span>
+          <select data-lr="maxChars"><option value="1500">1 500</option><option value="4000">4 000</option>
+          <option value="8000">8 000</option><option value="12000">12 000</option></select></label>
+      </div>
+
+      <div class="grid3">
+        <label class="field"><span>Results attached</span>
+          <select data-key="resultCount">
+            <option value="3">3</option><option value="5">5</option>
+            <option value="8">8</option><option value="10">10</option>
+          </select></label>
+        <label class="field"><span>Freshness (real-time filter)</span>
+          <select data-key="freshness">
+            <option value="any">Any time</option><option value="hour">Past hour</option>
+            <option value="day">Past 24 hours</option><option value="week">Past week</option>
+            <option value="month">Past month</option>
+          </select></label>
+        <label class="field"><span>Search language</span>
+          <select data-key="searchLang">
+            <option value="auto">Auto</option><option value="en">English</option>
+            <option value="bn">বাংলা</option><option value="hi">हिन्दी</option>
+            <option value="es">Español</option><option value="fr">Français</option>
+            <option value="de">Deutsch</option><option value="zh">中文</option>
+            <option value="ja">日本語</option><option value="ar">العربية</option>
+          </select></label>
+        <label class="field"><span>Pages to deep-read</span>
+          <select data-key="deepReadCount">
+            <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+          </select></label>
+        <label class="field"><span>Cache reuse (minutes)</span>
+          <select data-key="cacheTtlMin">
+            <option value="0">No cache</option><option value="5">5</option>
+            <option value="10">10</option><option value="30">30</option><option value="60">60</option>
+          </select></label>
+      </div>
+    </section>
+
+    <!-- ============ ENGINES ============ -->
+    <section id="tab-engines" class="tab">
+      <h2>Search engines</h2>
+      <p class="hint">Pick the engine used first. If it fails or returns nothing, the engines below it are tried in order (when auto-fallback is on). No API key is needed for any built-in engine.</p>
+      <div class="card">
+        <div class="row"><div><strong>Auto-fallback</strong><small>Try the next engine automatically when one fails.</small></div>
+          <label class="switch"><input type="checkbox" data-key="fallback"/><span></span></label></div>
+        <label class="field"><span>Primary engine</span><select id="primaryEngine"></select></label>
+      </div>
+      <h3>Optional API-key engines (strongest, most reliable)</h3>
+      <p class="hint">These are off by default and never needed. If you add a key, that engine becomes available and is tried first.</p>
+      <div class="card" id="apiKeysCard"></div>
+
+      <h3>Fallback order</h3>
+      <p class="hint">Drag is not required — use the arrows. Engines you switch off are skipped.</p>
+      <ul id="engineOrder" class="orderlist"></ul>
+    </section>
+
+    <!-- ============ CUSTOM ============ -->
+    <section id="tab-custom" class="tab">
+      <h2>Custom search engines & servers</h2>
+      <p class="hint">Point AI Web Access at <em>any</em> search engine or your own server. Use <code>{query}</code> where the search term goes and <code>{count}</code> for the number of results. For HTML pages give CSS selectors; for JSON APIs give the field names.</p>
+      <div class="presets">
+        <button data-preset="hn">+ Hacker News</button>
+        <button data-preset="github">+ GitHub</button>
+        <button data-preset="searx">+ SearXNG</button>
+        <button data-preset="blank">+ Blank engine</button>
+      </div>
+      <ul id="customList" class="customlist"></ul>
+
+      <div id="customEditor" class="editor" hidden>
+        <h3 id="editorTitle">New engine</h3>
+        <div class="grid2">
+          <label class="field"><span>Name</span><input id="c_name" placeholder="My engine"/></label>
+          <label class="field"><span>Response type</span>
+            <select id="c_type"><option value="html">HTML page (CSS selectors)</option><option value="json">JSON API</option></select></label>
+        </div>
+        <label class="field"><span>URL template</span>
+          <input id="c_url" placeholder="https://example.com/search?q={query}&n={count}"/></label>
+        <div class="grid2">
+          <label class="field"><span>Method</span>
+            <select id="c_method"><option>GET</option><option>POST</option></select></label>
+          <label class="field"><span>&nbsp;</span>
+            <button id="c_grant" class="btn ghost">Grant host access</button></label>
+        </div>
+
+        <div id="htmlFields">
+          <div class="grid2">
+            <label class="field"><span>Result item selector</span><input id="c_item" placeholder="li.result"/></label>
+            <label class="field"><span>Link selector</span><input id="c_link" placeholder="a.title"/></label>
+          </div>
+          <div class="grid2">
+            <label class="field"><span>Title selector</span><input id="c_title" placeholder="a.title"/></label>
+            <label class="field"><span>Snippet selector</span><input id="c_snippet" placeholder="p.snippet"/></label>
+          </div>
+        </div>
+        <div id="jsonFields" hidden>
+          <div class="grid2">
+            <label class="field"><span>Results path</span><input id="c_path" placeholder="results"/></label>
+            <label class="field"><span>Title key</span><input id="c_tkey" placeholder="title"/></label>
+          </div>
+          <div class="grid2">
+            <label class="field"><span>Link key</span><input id="c_lkey" placeholder="url"/></label>
+            <label class="field"><span>Snippet key</span><input id="c_skey" placeholder="snippet"/></label>
+          </div>
+        </div>
+
+        <div class="editorActions">
+          <input id="c_testq" placeholder="test query" value="artificial intelligence"/>
+          <button id="c_test" class="btn ghost">Test</button>
+          <button id="c_save" class="btn primary">Save</button>
+          <button id="c_cancel" class="btn ghost">Cancel</button>
+        </div>
+        <pre id="c_out" class="out"></pre>
+      </div>
+    </section>
+
+    <!-- ============ DEEP & DARK ============ -->
+    <section id="tab-deepdark" class="tab">
+      <h2>Deep &amp; Dark web</h2>
+
+      <h3>Deep web (works right now, no Tor needed)</h3>
+      <p class="hint">Huge public indexes that ordinary search engines don't fully cover —
+        scholarly papers, DOI registry, biomedical literature and archived web/books.
+        Enable any of them in <b>Search engines → Fallback order</b> or set one as primary.</p>
+      <div class="presets" id="deepQuick"></div>
+
+      <h3>Dark web (.onion) — Tor mode</h3>
+      <p class="hint">
+        <code>.onion</code> addresses exist only inside the Tor network, so a browser extension
+        cannot open them by itself. When you turn Tor mode on <b>and run Tor on this computer</b>
+        (install <code>tor</code>, or use Tor Browser's bundled daemon), the extension installs a
+        scoped proxy rule that sends <b>only <code>*.onion</code> traffic</b> to your local Tor SOCKS
+        port. All normal browsing stays direct. Onion search engines are then usable as regular engines.
+        Onion services use plain <code>http://</code> (no public CA issues .onion certificates), which is
+        normal and still end-to-end encrypted by Tor itself.
+        The <b>Test</b> button auto-tries ports <code>9050 → 9150 → 9051</code> and saves whichever works.
+      </p>
+      <div class="card">
+        <div class="row"><div><strong>Tor / onion mode</strong><small>Route *.onion through local Tor SOCKS. Requires Tor running locally.</small></div>
+          <label class="switch"><input type="checkbox" data-tor="enabled"/><span></span></label></div>
+        <div class="grid2">
+          <label class="field"><span>Tor SOCKS host</span><input data-tor="host" placeholder="127.0.0.1"/></label>
+          <label class="field"><span>Tor SOCKS port</span><input data-tor="port" placeholder="9050"/></label>
+        </div>
+        <div class="editorActions">
+          <button id="torTest" class="btn ghost">Test Tor connection</button>
+          <button id="torOff" class="btn danger">Disable &amp; remove proxy</button>
+        </div>
+        <pre id="torOut" class="out"></pre>
+      </div>
+
+      <h3>Onion search engines</h3>
+      <p class="hint">Shipped: <b>DuckDuckGo (.onion)</b> and <b>Ahmia (.onion)</b>. Onion addresses
+        sometimes rotate — if one stops resolving, add the current address yourself as a
+        <b>Custom engine</b> (type HTML) using a trusted directory. Tor clients discover relays
+        automatically via the directory authorities; no node list is needed or bundled.</p>
+      <div class="presets" id="onionQuick"></div>
+
+      <div class="card">
+        <p style="margin:8px 0"><strong>What is deliberately NOT included:</strong> marketplaces,
+        torrent trackers / pirate servers, or any service whose purpose is illegal distribution.
+        This extension indexes and searches; it does not bundle infringement infrastructure.</p>
+      </div>
+    </section>
+
+    <!-- ============ VOICE ============ -->
+    <section id="tab-voice" class="tab">
+      <h2>Voice input</h2>
+      <p class="hint">Uses your browser's built-in speech recognition (the same Google speech service that powers Google Translate's microphone). No API key, no external server of ours. The mic button on the floating pill starts and stops dictation; whatever you say is typed into the chat box.</p>
+      <div class="card">
+        <div class="row"><div><strong>Enable voice input</strong></div>
+          <label class="switch"><input type="checkbox" data-voice="enabled"/><span></span></label></div>
+        <div class="row"><div><strong>Continuous mode</strong><small>Keep listening until you press the mic again (great for long dictation).</small></div>
+          <label class="switch"><input type="checkbox" data-voice="continuous"/><span></span></label></div>
+        <div class="row"><div><strong>Show live transcript</strong><small>Display what is being heard while you speak.</small></div>
+          <label class="switch"><input type="checkbox" data-voice="interim"/><span></span></label></div>
+        <div class="row"><div><strong>Type while speaking</strong><small>Insert the interim transcript into the chat box live instead of waiting for each sentence.</small></div>
+          <label class="switch"><input type="checkbox" data-voice="liveInsert"/><span></span></label></div>
+        <label class="field"><span>Dictation language</span><select id="voiceLang"></select></label>
+      </div>
+    </section>
+
+    <!-- ============ PROMPT ============ -->
+    <section id="tab-prompt" class="tab">
+      <h2>Prompt template</h2>
+      <p class="hint">This text is appended to your message, right before it is sent. Available variables:
+        <code>{query}</code> the search query, <code>{results}</code> the numbered results, <code>{date}</code> today's date &amp; time.</p>
+      <textarea id="template" rows="12" spellcheck="false"></textarea>
+      <div class="editorActions">
+        <button id="tplReset" class="btn ghost">Reset to default</button>
+        <button id="tplSave" class="btn primary">Save template</button>
+      </div>
+    </section>
+
+    <!-- ============ APPEARANCE ============ -->
+    <section id="tab-appearance" class="tab">
+      <h2>Appearance & sites</h2>
+      <div class="card">
+        <label class="field"><span>Panel opacity</span>
+          <input type="range" min="0.4" max="1" step="0.05" data-ui="opacity"/></label>
+        <label class="field"><span>Panel size</span>
+          <input type="range" min="0.7" max="1.4" step="0.05" data-ui="scale"/></label>
+        <div class="row"><div><strong>Start collapsed</strong><small>Show only the small logo until clicked.</small></div>
+          <label class="switch"><input type="checkbox" data-ui="collapsed"/><span></span></label></div>
+        <div class="row"><div><strong>Reset position</strong><small>Put the floating pill back in its default corner.</small></div>
+          <button id="resetPos" class="btn ghost">Reset</button></div>
+      </div>
+      <h3>Hidden sites</h3>
+      <p class="hint">The floating panel will not appear on these sites.</p>
+      <ul id="hiddenSites" class="chiplist"></ul>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section id="tab-aiskills" class="tab">
+      <h2>Custom AI sites, system instruction &amp; skills</h2>
+
+      <h3>Run the extension on ANY AI website</h3>
+      <p class="hint">Paste the link of any AI/chat site. The pill, real-time context injection and
+        voice input start working there immediately (already-open tabs get injected too).</p>
+      <label class="field"><span>AI site link</span>
+        <input id="csUrl" placeholder="https://my-ai.example.com"/></label>
+      <div class="editorActions"><button id="csAdd" class="btn">Add site</button></div>
+      <ul id="csList" class="chiplist"></ul>
+
+      <h3>System instruction (.txt supported)</h3>
+      <p class="hint">Every answer the chatbot gives will follow this instruction. Write it here or
+        load a .txt file.</p>
+      <textarea id="sysInstr" rows="6"
+        placeholder="e.g. Always answer in Bangla, use bullet points, cite every source…"></textarea>
+      <div class="editorActions">
+        <button id="sysLoad" class="btn ghost">Load .txt file</button>
+        <input type="file" id="sysFile" accept=".txt,text/plain" hidden/>
+        <span id="sysCount" class="hint"></span>
+      </div>
+
+      <h3>Customs — upload skills</h3>
+      <p class="hint">Cloud-AI style: pick a skill file (.txt / .md / .json), review the preview,
+        then press <b>Upload</b> to activate it or <b>Cancel</b> to discard. Active skills are sent
+        to the chatbot with every message and applied when relevant.</p>
+      <div class="editorActions">
+        <button id="skPick" class="btn ghost">Choose skill file</button>
+        <input type="file" id="skFile" accept=".txt,.md,.markdown,.json,text/plain,application/json" hidden/>
+      </div>
+      <div id="skPreviewBox" class="editor" hidden>
+        <h3 id="skName"></h3>
+        <pre id="skPreview" style="max-height:220px;overflow:auto;white-space:pre-wrap;font:12px/1.5 ui-monospace,Menlo,Consolas,monospace;background:rgba(127,127,127,.12);border-radius:8px;padding:8px;"></pre>
+        <div class="editorActions">
+          <button id="skUpload" class="btn">Upload</button>
+          <button id="skCancel" class="btn ghost">Cancel</button>
+        </div>
+      </div>
+      <ul id="skList" class="chiplist"></ul>
+    </section>
+
+    <section id="tab-about" class="tab">
+      <h2>About & shortcuts</h2>
+      <div class="card">
+        <p><strong>AI Web Access</strong> gives any AI chatbot real-time knowledge of the web.
+        Before your message is sent, it searches the web with the engine you chose, attaches the
+        freshest results (with sources), and — if you like — reads the actual pages. It also adds
+        hands-free voice dictation using your browser's own speech engine.</p>
+        <p>Everything runs locally in your browser plus the search engines you pick. Your prompts are
+        sent to the search engine as a query and the results are sent to the chatbot you are using.</p>
+      </div>
+      <h3>Keyboard shortcuts</h3>
+      <table class="keys">
+        <tr><td><code>Alt+Shift+W</code></td><td>Toggle web access on / off</td></tr>
+        <tr><td><code>Alt+Shift+M</code></td><td>Collapse / expand the floating panel</td></tr>
+        <tr><td><code>Alt+Shift+V</code></td><td>Start / stop voice dictation</td></tr>
+      </table>
+      <p class="hint">You can change these on Chrome's extensions shortcuts page
+        (<code>chrome://extensions/shortcuts</code>).</p>
+      <h3>Data & permissions</h3>
+      <ul class="bullets">
+        <li><b>storage</b> — remembers your settings.</li>
+        <li><b>tabs / scripting</b> — find your open AI-chat tabs (to re-attach the panel after an update) and, only when you paste a link or a search engine blocks a plain fetch, render that one page in a minimized window to read it. Your browsing history is never read.</li>
+        <li><b>declarativeNetRequest</b> — adjusts request headers for the search-engine fetches made by this extension only.</li>
+        <li><b>proxy</b> — used only when you switch on Tor mode (routes <code>*.onion</code> addresses only).</li>
+        <li><b>offscreen</b> — parses search result HTML in a hidden document.</li>
+        <li><b>host permissions</b> — all-sites access (`<all_urls>`) so any link you paste can be read; nothing is fetched unless you ask for it.</li>
+      </ul>
+      <div class="editorActions">
+        <button id="clearCache2" class="btn ghost">Clear search cache</button>
+        <button id="resetAll" class="btn danger">Reset all settings</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="options.js"></script>
+</body>
+</html>

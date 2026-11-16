@@ -1,0 +1,201 @@
+{
+  "manifest_version": 3,
+  "name": "AI Web Access",
+  "short_name": "AI Web Access",
+  "version": "2.8.20",
+  "description": "Real-time web search, voice dictation and live context injection for AI chat platforms. Works with ChatGPT, Claude, Gemini, DeepSeek, Grok, Kimi and more.",
+  "author": "AI Web Access",
+  "icons": {
+    "16": "assets/icons/icon16.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
+  },
+  "action": {
+    "default_title": "AI Web Access",
+    "default_icon": {
+      "16": "assets/icons/icon16.png",
+      "48": "assets/icons/icon48.png",
+      "128": "assets/icons/icon128.png"
+    },
+    "default_popup": "pages/popup.html"
+  },
+  "options_ui": {
+    "page": "pages/options.html",
+    "open_in_tab": true
+  },
+  "permissions": [
+    "declarativeNetRequest",
+    "storage",
+    "tabs",
+    "scripting",
+    "offscreen",
+    "proxy"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "https://ifconfig.me/*",
+    "https://api.ipify.org/*",
+    "https://ipinfo.io/*",
+    "https://chatgpt.com/*",
+    "https://chat.openai.com/*",
+    "https://claude.ai/*",
+    "https://gemini.google.com/*",
+    "https://bard.google.com/*",
+    "https://chat.deepseek.com/*",
+    "https://www.kimi.com/*",
+    "https://kimi.com/*",
+    "https://chat.z.ai/*",
+    "https://z.ai/*",
+    "https://grok.com/*",
+    "https://x.com/*",
+    "https://www.perplexity.ai/*",
+    "https://copilot.microsoft.com/*",
+    "https://www.bing.com/chat*",
+    "https://www.meta.ai/*",
+    "https://chat.mistral.ai/*",
+    "https://lechat.mistral.ai/*",
+    "https://huggingface.co/*",
+    "https://lmarena.ai/*",
+    "https://arena.ai/*",
+    "https://you.com/*",
+    "https://pi.ai/*",
+    "https://chat.qwen.ai/*",
+    "https://tongyi.aliyun.com/*",
+    "https://html.duckduckgo.com/*",
+    "https://lite.duckduckgo.com/*",
+    "https://duckduckgo.com/*",
+    "https://api.duckduckgo.com/*",
+    "https://www.google.com/*",
+    "https://www.bing.com/*",
+    "https://search.brave.com/*",
+    "https://api.search.brave.com/*",
+    "https://www.mojeek.com/*",
+    "https://search.yahoo.com/*",
+    "https://www.startpage.com/*",
+    "https://www.ecosia.org/*",
+    "https://www.yandex.com/*",
+    "https://yandex.com/*",
+    "https://www.baidu.com/*",
+    "https://*.wikipedia.org/*",
+    "https://api.tavily.com/*",
+    "https://api.serper.dev/*",
+    "https://searx.be/*",
+    "https://search.marginalia.nu/*",
+    "https://api.openalex.org/*",
+    "https://api.crossref.org/*",
+    "https://api.semanticscholar.org/*",
+    "https://archive.org/*",
+    "https://eutils.ncbi.nlm.nih.gov/*",
+    "https://pubmed.ncbi.nlm.nih.gov/*",
+    "https://ahmia.fi/*",
+    "http://*.onion/*",
+    "https://*.onion/*",
+    "https://www.youtube.com/*",
+    "https://youtu.be/*",
+    "https://www.facebook.com/*",
+    "https://fb.watch/*",
+    "https://www.instagram.com/*",
+    "https://twitter.com/*",
+    "https://www.reddit.com/*",
+    "https://www.medium.com/*",
+    "https://medium.com/*",
+    "https://www.linkedin.com/*",
+    "https://www.tiktok.com/*",
+    "https://github.com/*",
+    "https://stackoverflow.com/*",
+    "https://news.ycombinator.com/*"
+  ],
+  "commands": {
+    "toggle-web-access": {
+      "suggested_key": {
+        "default": "Alt+Shift+W"
+      },
+      "description": "Enable / disable real-time web access on the current tab"
+    },
+    "toggle-panel": {
+      "suggested_key": {
+        "default": "Alt+Shift+M"
+      },
+      "description": "Show / collapse the floating AI Web Access panel"
+    },
+    "start-voice": {
+      "suggested_key": {
+        "default": "Alt+Shift+V"
+      },
+      "description": "Start / stop voice dictation into the chat box"
+    }
+  },
+  "background": {
+    "service_worker": "background/bg.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*",
+        "https://claude.ai/*",
+        "https://gemini.google.com/*",
+        "https://bard.google.com/*",
+        "https://chat.deepseek.com/*",
+        "https://www.kimi.com/*",
+        "https://kimi.com/*",
+        "https://chat.z.ai/*",
+        "https://grok.com/*",
+        "https://www.perplexity.ai/*",
+        "https://copilot.microsoft.com/*",
+        "https://www.bing.com/chat*",
+        "https://www.meta.ai/*",
+        "https://chat.mistral.ai/*",
+        "https://lechat.mistral.ai/*",
+        "https://huggingface.co/chat/*",
+        "https://lmarena.ai/*",
+        "https://arena.ai/*",
+        "https://you.com/*",
+        "https://pi.ai/*",
+        "https://chat.qwen.ai/*"
+      ],
+      "js": [
+        "contentScripts/shared.js",
+        "contentScripts/adapters.js",
+        "contentScripts/ui.js",
+        "contentScripts/main.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*",
+        "https://claude.ai/*",
+        "https://gemini.google.com/*",
+        "https://bard.google.com/*",
+        "https://chat.deepseek.com/*",
+        "https://www.kimi.com/*",
+        "https://kimi.com/*",
+        "https://chat.z.ai/*",
+        "https://grok.com/*",
+        "https://www.perplexity.ai/*",
+        "https://copilot.microsoft.com/*",
+        "https://www.bing.com/chat*",
+        "https://www.meta.ai/*",
+        "https://chat.mistral.ai/*",
+        "https://lechat.mistral.ai/*",
+        "https://huggingface.co/chat/*",
+        "https://lmarena.ai/*",
+        "https://arena.ai/*",
+        "https://you.com/*",
+        "https://pi.ai/*",
+        "https://chat.qwen.ai/*"
+      ],
+      "js": [
+        "contentScripts/voiceBridge.js"
+      ],
+      "run_at": "document_idle",
+      "world": "MAIN",
+      "all_frames": false
+    }
+  ],
+  "web_accessible_resources": []
+}

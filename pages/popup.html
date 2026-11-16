@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="popup.css" />
+  <title>AI Web Access</title>
+</head>
+<body>
+  <header>
+    <img src="../assets/icons/icon48.png" alt="" />
+    <div class="titles">
+      <h1>AI Web Access</h1>
+      <span id="version"></span>
+    </div>
+    <button id="openOptions" class="icon" title="Open full settings">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    </button>
+  </header>
+
+  <section class="row master">
+    <div>
+      <strong>Real-time web access</strong>
+      <small>Attach live search results to your prompts</small>
+    </div>
+    <label class="switch"><input type="checkbox" id="enabled" /><span></span></label>
+  </section>
+
+  <section class="grid">
+    <label class="field">
+      <span>Search engine</span>
+      <select id="primaryEngine"></select>
+    </label>
+    <label class="field">
+      <span>Freshness</span>
+      <select id="freshness">
+        <option value="any">Any time</option>
+        <option value="hour">Past hour</option>
+        <option value="day">Past 24 hours</option>
+        <option value="week">Past week</option>
+        <option value="month">Past month</option>
+      </select>
+    </label>
+    <label class="field">
+      <span>Results attached</span>
+      <select id="resultCount">
+        <option value="3">3</option><option value="5">5</option>
+        <option value="8">8</option><option value="10">10</option>
+      </select>
+    </label>
+    <label class="field">
+      <span>Voice language</span>
+      <select id="voiceLang"></select>
+    </label>
+  </section>
+
+  <section class="row">
+    <div><strong>Auto-fallback engines</strong><small>If the first engine fails</small></div>
+    <label class="switch"><input type="checkbox" id="fallback" /><span></span></label>
+  </section>
+  <section class="row">
+    <div><strong>Smart query</strong><small>Clean the prompt into a search query</small></div>
+    <label class="switch"><input type="checkbox" id="smartQuery" /><span></span></label>
+  </section>
+  <section class="row">
+    <div><strong>Send automatically</strong><small>Off = review context before sending</small></div>
+    <label class="switch"><input type="checkbox" id="autoSend" /><span></span></label>
+  </section>
+  <section class="row">
+    <div><strong>Link reader</strong><small>Read links in your message (YouTube, FB, articles…)</small></div>
+    <label class="switch"><input type="checkbox" id="linkReader" /><span></span></label>
+  </section>
+  <section class="row">
+    <div><strong>Voice input</strong><small>Mic button → speech to text</small></div>
+    <label class="switch"><input type="checkbox" id="voiceEnabled" /><span></span></label>
+  </section>
+  <section class="row">
+    <div><strong>Hide panel on this site</strong><small id="siteLabel"></small></div>
+    <label class="switch"><input type="checkbox" id="hideSite" /><span></span></label>
+  </section>
+
+  <footer>
+    <button id="testSearch" class="btn ghost">Test search</button>
+    <button id="diag" class="btn ghost">Diagnose engines</button>
+    <button id="clearCache" class="btn ghost">Clear cache</button>
+  </footer>
+  <pre id="diagOut" class="diagout" hidden></pre>
+  <button id="diagCopy" class="btn ghost" hidden>Copy report</button>
+  <div id="status" class="status"></div>
+
+  <script src="popup.js"></script>
+  <style>
+    .diagout {
+      margin: 8px 10px; padding: 8px; max-height: 220px; overflow: auto;
+      background: rgba(127,127,127,.12); border-radius: 8px;
+      font: 11px/1.5 ui-monospace, Menlo, Consolas, monospace; white-space: pre-wrap;
+    }
+  </style>
+</body>
+</html>
